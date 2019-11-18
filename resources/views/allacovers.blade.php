@@ -18,6 +18,8 @@
                                     <div class="tools"> </div>
                                 </div>
                                 <div class="portlet-body">
+								</form>
+									<meta name="csrf-token" content="{{ csrf_token() }}">
                                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                                          <thead>
                                             <tr>
@@ -28,6 +30,9 @@
                                                 <th class="all">Start Date</th>                                              
                                                 <th class="all">Last Date</th>                                              
                                                 <th class="all">Expiry Status</th>                                              
+                                                <th class="all">Amount</th>                   
+                                                <th class="all">Spent Amount</th>                   
+                                                <th class="all">Balance</th>                   
                                                 <th class="all">Status</th>                   
                                                 <th class="all">Edit</th>
                                                 <th class="all">Delete</th>
@@ -43,10 +48,12 @@
                                                 <td>{{ date('d/m/Y',strtotime($key->startdate)) }}</td>                                                
                                                 <td>{{ date('d/m/Y',strtotime($key->expirydate)) }}</td>                                           
                                                 <td>@if (date('Y-m-d',strtotime($key->expirydate))>(date('Y-m-d')))  {{ "Active" }} @else {{ "Expired" }} @endif</td>                                           
-                                                <td>  {{ $key->status }}</td>                                           
-                                                                                             
+                                                <td>  {{ number_format($key->amount,2) }}</td> 
+                                                <td>  {{ number_format($key->reconamount,2) }}</td> 
+                                                <td>  {{ number_format(($key->amount-$key->reconamount),2) }}</td> 
+												<td>  {{ $key->status }}</td>                
                                                 <td><a  href="{{ url('covers/loadedits/'. $key->coverid.'/'. $key->PatientId ) }}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></td>
-                                                <td><a  href="#"  ><i class="fa fa-trash-o"></i> Delete</a></td>
+                                                <td><a  href="#" onclick="deleterecord('{{ url('covers/deleterecord/insurancecover/TransId/'.$key->TransId )}}')" class="delete" ><i class="fa fa-trash-o"></i> Delete</a></td>
 											
                                             </tr>
 											 @endforeach
@@ -59,6 +66,9 @@
                                                 <th class="all">Start Date</th>                                              
                                                 <th class="all">Last Date</th>												
                                                 <th class="all">Expiry Status</th>       											
+                                                <th class="all">Amount</th> 
+												<th class="all">Spent Amount</th>          											
+												<th class="all">Balance</th>          											
                                                 <th class="all">Status</th>       											
                                                 <th class="none">edit</th>
                                                 <th class="none">delete</th>
@@ -66,6 +76,7 @@
                                         </tfoot>
                                         </tbody>
                                     </table>
+									</form>
                                 </div>
                             </div>
                             <!-- END EXAMPLE TABLE PORTLET-->

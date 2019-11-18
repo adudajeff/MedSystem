@@ -37,6 +37,18 @@ class ReceiptModel extends Model
 		      ->get());
 	}
 	
+	public function Loadbillings()
+	{
+	    return(DB::table('documents')
+		      ->join('patient', 'patient.PatientId', '=', 'documents.PatientId')
+		      ->join('documenttype', 'documenttype.type', '=', 'documents.documenttype')
+		      ->join('billsum', 'billsum.invoiceno', '=', 'documents.invoiceno')
+             ->join('hosptal', 'hosptal.hosptalid', '=', 'documents.hosptalid')
+             ->join('country', 'patient.CountryCode', '=', 'country.CountryCode')
+             ->select('billsum.*','documents.*','documenttype.*','hosptal.hosptalname','patient.*','country.*')            
+		      ->get());
+	}
+	
 		
 	public function Loaddocumetprint($invoiceno)
 	{
@@ -89,6 +101,14 @@ class ReceiptModel extends Model
 		                 ->update($data));
 	}
 	
+	public function updatepaid(array $data,$item)
+	{
+	    
+	      return(DB::table('billsum')
+		                 ->where('billno', $item)
+		                 ->update($data));
+	}
+	
 	public function Addsum(array $data)
 	{
 	    
@@ -119,6 +139,23 @@ class ReceiptModel extends Model
 		                 ->where('patientid', $id)
 		                 ->get());
 	}
+	
+	public function loadimsno($imsno)
+	{
+	    return(DB::table('patient')
+		                 ->where('IMSNO', $imsno)
+						 ->select('patient.PatientId') 
+		                 ->first());
+	}	
+	public function loadname($invoiceno)
+	{
+	    return(DB::table('documents')
+		     ->join('patient', 'patient.PatientId', '=', 'documents.PatientId')		      
+             ->select('patient.*') 
+			 ->where('invoiceno',$invoiceno)
+		     ->first());
+	}
+	
 	
 	public function Deleterecord()
 	{

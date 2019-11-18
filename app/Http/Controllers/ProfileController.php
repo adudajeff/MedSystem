@@ -74,12 +74,12 @@ class ProfileController extends Controller {
         ],$request->input('Patientid')))
         { 
 	        $validator->errors()->add('failed', 'Record Save Success');
-		    return redirect('User/profile')->withErrors($validator);
+		    return redirect('User/profile/'.$request->input('Patientid').'')->withErrors($validator);
 	             
        }else{
 		   
 		    $validator->errors()->add('failed', 'No change was Detected');
-	         return redirect('User/profile')
+	         return redirect('User/profile/'.$request->input('Patientid').'')
 	             ->withErrors($validator);
 	   }               
    }
@@ -108,7 +108,7 @@ class ProfileController extends Controller {
 	    $role = new RoleModel();
 		
        if ($role->Updaterights([          
-			'userid' =>$request->input('Patientidr'),        
+			'id' =>$request->input('Patientidr'),        
 			'patients' =>$request->input('optPatient'),        
 			'doctors' =>$request->input('optDoctor'),                   
 			'appointments' =>$request->input('optAppointment'),

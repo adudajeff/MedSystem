@@ -4,7 +4,7 @@
                 <!-- BEGIN CONTENT BODY -->
                      <div class="page-content">
 					    <div class="page-title">
-                            <h1>Staff Profile 
+                            <h1>Member Profile 
                                 <small>My Profile</small>
                             </h1>
                         </div>
@@ -36,7 +36,7 @@
 							@foreach($profile as $key)
 							    <?php 
 								 $PatientId= $key->PatientId;                                 
-								 $name= $key->FirstName.''.$key->LastName;                                 
+								 $name= $key->FirstName.' '.$key->LastName;                                 
                                  $Address=$key->Address; 
                                  $MobileNo=$key->MobileNo;                                 
                                  $Email =$key->Email; 
@@ -281,10 +281,12 @@
                                                     <a data-toggle="tab" href="#tab_3-3">
                                                         <i class="fa fa-lock"></i> Change Password </a>
                                                 </li>
+												@if  (Auth::user()->documents==1)
                                                 <li>
                                                     <a data-toggle="tab" href="#tab_4-4">
                                                         <i class="fa fa-eye"></i>Roles and Permission </a>
                                                 </li>
+												@endif
                                             </ul>
                                         </div>
                                         <div class="col-md-9">
@@ -518,6 +520,21 @@
                                                                         </label>
                                                                         <label class="mt-radio">
                                                                             <input type="radio" name="optsettings" value="0" @if($settings==0) checked="" @endif > No
+                                                                            <span></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>		
+															<tr>
+                                                                <td> Allow Reports </td>
+                                                                <td>
+                                                                    <div class="mt-radio-inline">
+                                                                        <label class="mt-radio">
+                                                                            <input type="radio" name="optreports" value="1" @if($reports==1) checked="" @endif > Yes
+                                                                            <span></span>
+                                                                        </label>
+                                                                        <label class="mt-radio">
+                                                                            <input type="radio" name="optreports" value="0" @if($reports==0) checked="" @endif > No
                                                                             <span></span>
                                                                         </label>
                                                                     </div>

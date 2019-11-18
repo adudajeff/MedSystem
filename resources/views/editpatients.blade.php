@@ -8,7 +8,7 @@
 						<div class="portlet box green">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-gift"></i>Patient/Staff Basic Information </div>
+								<i class="fa fa-gift"></i>IMC Member Basic Information </div>
 							<div class="tools">
 								<a href="javascript:;" class="collapse"> </a>
 								<a href="#portlet-config" data-toggle="modal" class="config"> </a>
@@ -38,6 +38,24 @@
 													   @endif
                                                  </div>
                                              </div>
+										     <div class="form-group row {{ $errors->has('Title') ? ' has-error' : '' }}">
+													<label class="control-label col-md-3">Title 
+														<span class="required" aria-required="true"> * </span>
+													</label>
+													<div class="col-md-5">
+														<select class="form-control input-height" name="Title">
+															<option value="{{ $patient->TitleCode }}">{{ $patient->TitleDescription }}</option>
+															@foreach($title as $key)
+															   <option value="{{ $key->TitleCode }}">{{ $key->TitleDescription }}</option>
+															@endforeach
+														</select>
+														   @if ($errors->has('Title'))
+															<span class="help-block ">
+																{{ $errors->first('Title') }}
+															</span>
+														   @endif
+													</div>
+										    </div>
 										   <div class="form-group row {{ $errors->has('FirstName') ? ' has-error' : '' }}">
                                                 <label class="control-label col-md-3">Surname
                                                     <span class="required" aria-required="true"> * </span>
@@ -66,8 +84,26 @@
 														     @endif
 											        </div>                                                            
 											 </div>
-											  <div class="form-group row {{ $errors->has('CountryCode') ? ' has-error' : '' }}">
-													<label class="control-label col-md-3">Select Country 
+											  <div class="form-group row {{ $errors->has('Nationality') ? ' has-error' : '' }}">
+													<label class="control-label col-md-3">Nationality 
+														<span class="required" aria-required="true"> * </span>
+													</label>
+													<div class="col-md-5">
+														<select class="form-control input-height" name="Nationality">
+															<option value="{{ $patient->Nationality }}">{{ $patient->Country }}</option>
+															@foreach($country as $key)
+															   <option value="{{ $key->CountryCode }}">{{ $key->Country }}</option>
+															@endforeach
+														</select>
+														   @if ($errors->has('Nationality'))
+															<span class="help-block ">
+																{{ $errors->first('Nationality') }}
+															</span>
+														   @endif
+													</div>
+										    </div>		  
+											<div class="form-group row {{ $errors->has('CountryCode') ? ' has-error' : '' }}">
+													<label class="control-label col-md-3">Country of Work
 														<span class="required" aria-required="true"> * </span>
 													</label>
 													<div class="col-md-5">
@@ -120,20 +156,7 @@
 													   @endif
                                                 </div>
                                             </div>
-                                            <div class="form-group row {{ $errors->has('Age') ? ' has-error' : '' }}">
-                                                <label class="control-label col-md-3">Age
-                                                    <span class="required" aria-required="true"> * </span>
-                                                </label>
-                                                <div class="col-md-5">
-                                                <input type="text" name="Age" value="{{ $patient->Age }}" data-required="1" placeholder="enter your age" class="form-control input-height"> 
-												    @if ($errors->has('Age'))
-														<span class="help-block help-block-error">
-															{{ $errors->first('Age') }}
-														</span>
-													   @endif
-												</div>
-                                                      
-											</div>
+                                       
                                             <div class="form-group row {{ $errors->has('MobileNo') ? ' has-error' : '' }}">
                                                 <label class="control-label col-md-3">Mobile No.
                                                     <span class="required" aria-required="true"> * </span>
@@ -148,8 +171,20 @@
 													</div>
                                                       
 											</div>
+											<div class="form-group row {{ $errors->has('externalmember') ? ' has-error' : '' }}">
+                                                <label class="control-label col-md-3">Member/Non Member
+                                                    <span class="required" aria-required="true">  </span>
+                                                </label>
+                                                <div class="col-md-5">                                                    
+													   <label class="mt-checkbox mt-checkbox-outline">
+                                                            <input type="checkbox" name="externalmember" id="externalmember" <?php  if ($patient->externalmember==1) { ?> checked <?php } ?> > <b>Non Member?</b>
+                                                            <span></span>
+                                                        </label>
+												</div>
+                                                      
+											</div>
 											<div class="form-group row {{ $errors->has('IMSNO') ? ' has-error' : '' }}">
-                                                <label class="control-label col-md-3">IMS No.
+                                                <label class="control-label col-md-3">Passport No/IMS No.
                                                     <span class="required" aria-required="true"> * </span>
                                                 </label>
                                                 <div class="col-md-5">
@@ -157,6 +192,20 @@
 													   @if ($errors->has('IMSNO'))
 														<span class="help-block ">
 															{{ $errors->first('IMSNO') }}
+														</span>
+													   @endif
+													</div>
+                                                      
+											</div>
+											<div class="form-group row {{ $errors->has('AARno') ? ' has-error' : '' }}">
+                                                <label class="control-label col-md-3">AAR No.
+                                                    <span class="required" aria-required="true">  </span>
+                                                </label>
+                                                <div class="col-md-5">
+                                                    <input name="AARno" type="text" placeholder="AAR number" class="form-control input-height" value="{{ $patient->AARno }}"> 
+													   @if ($errors->has('AARno'))
+														<span class="help-block ">
+															{{ $errors->first('AARno') }}
 														</span>
 													   @endif
 													</div>
@@ -258,6 +307,7 @@
                                                 <div class="col-md-5">
                                                     <select class="form-control input-height" name="BloodGroup" >
                                                         <option value="{{ $patient->BloodGroup }}">{{ $patient->BloodGroup }}</option>
+                                                        <option  value="NOT DEFINED">NOT DEFINED</option>
                                                         <option value="A+">A+</option>
                                                         <option value="A-">A-</option>
                                                         <option value="B+</">B+</option>
@@ -317,7 +367,7 @@
                                             <div class="row">
                                                 <div class="offset-md-3 col-md-9">
                                                     <button type="submit" class="btn btn-info">Update Record</button>
-                                                    
+                                                     <a href="/Patients" class="btn btn-default red" > IMC members List</a>
                                                 </div>
                                             	</div>
                                         	</div>

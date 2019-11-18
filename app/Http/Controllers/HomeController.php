@@ -7,6 +7,7 @@ use Validator;
 use DB;
 use App\GlobalModel;
 use App\AppointmentModel;
+use App\RoleModel;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -18,6 +19,7 @@ class HomeController extends Controller
      *
      * @return void
      */
+	   
     public function __construct()
     {
         $this->middleware('auth');
@@ -36,6 +38,10 @@ class HomeController extends Controller
 	   $documentcount=$counts->documentscounts();
 	   $mbilsumcounts=$counts->mbilsumcount();
 	   $patientcount=$counts->patientcount();
+	   $reminder=$counts->reminder();
+	   $remindercount=$counts->remindercount();
+	   $notification=$counts->notification();
+	   $notificationcount=$counts->notificationcount();
 	   
 	   $appointments=$allpatients->LoadAppointments(); 
 	   return view('home')->with(compact('appointments'))
@@ -43,6 +49,10 @@ class HomeController extends Controller
 						  ->with('appointmentcount',$appointmentcount)
 						  ->with('documentcount',$documentcount)
 						  ->with('mbilsumcounts',$mbilsumcounts)
+						  ->with('reminder',$reminder)
+						  ->with('remindercount',$remindercount)
+						  ->with('notification',$notification)
+						  ->with('notificationcount',$notificationcount)
 						  ->with('patientcount',$patientcount);
     }
 	   
@@ -80,4 +90,21 @@ class HomeController extends Controller
 	             ->withErrors($validator);
                         
    }
+   
+   public function deleterecord($table=null,$field=null,$value=null)
+   {
+	     $delete = new Globalmodel();
+		
+		if ($delete->deleterecord($table,$field,$value))
+		{				
+			return response()->json([
+			'success' => 'Record Deleted Successfully!'
+			]);
+		}else{
+			return response()->json([
+			'error' => 'Record Deletion Failed!'
+			]);				
+		}	    
+   }	   
+   
 }

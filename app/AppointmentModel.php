@@ -2,6 +2,7 @@
 
 namespace App;
 use DB;
+
 use Illuminate\Database\Eloquent\Model;
 
 class AppointmentModel extends Model
@@ -48,6 +49,11 @@ class AppointmentModel extends Model
 		return(DB::table('appointment')->insert($data));
 	}
 	
+	public function Addnotification(array $data)
+	{
+	    
+		return(DB::table('notifications')->insert($data));
+	}
 	public function editappointments(array $data,$id)
 	{
 	    

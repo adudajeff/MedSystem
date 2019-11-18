@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Globalmodel;
 use App\AssigncoverModel;
 use App\ReceiptModel;
-
+use App\ReportsModel;
+use App\RoleModel;
 use Illuminate\Http\Request;
 use DB;
 use Validator;
@@ -28,6 +29,32 @@ public function bill() {
 		$documents=$alldocuments->Loaddocumetsedits();
 		return view('receiptformarking')->with(compact('documents'));
   }
+
+public function billforreconcile() {
+		  
+	    $alldocuments=new ReceiptModel();
+	    $billsammary=new ReportsModel();
+		$billsum=$billsammary->loadbillsummary();
+		
+		$documents=$alldocuments->Loaddocumets();
+		return view('billsammaryreportreconcile')
+		                 ->with(compact('billsum'))
+		                 ->with(compact('documents'));
+  
+}
+
+public function billforreconcileexpand($invoiceno=null) {
+		  
+	$alldocuments=new ReceiptModel();
+	$billsammary=new ReportsModel();
+	$billsum=$billsammary->loadbillsummaryexpand($invoiceno);
+	
+	$documents=$alldocuments->Loaddocumets();
+	return view('formarking')
+					 ->with(compact('billsum'))
+					 ->with(compact('documents'));
+
+}
   
  public function cover() {
 	   $newcovers=new AssigncoverModel();	    
@@ -86,6 +113,42 @@ public function bill() {
 		}
 		
 			
+  }
+  
+  
+  public function updatepaid(Request $request) {
+	  $validator = Validator::make($request->all(), [           
+			'docid'=>'required'
+			 
+        ]);
+		
+       	
+	    
+        if ($validator->fails()) {
+			$validator->errors()->add('failed', 'No record selected for update, kindly select and press Mark Button');
+                         return  redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+		}
+			
+		$save=new ReceiptModel;		
+		foreach($request->input('docid') as $tem)
+		{
+				 if ($save->updatepaid([
+					'Paymentstatus' =>'PAID'					
+				],$tem))
+				{ 
+				    $validator->errors()->add('success', 'Record updated');
+					
+			   }else{
+				   
+					$validator->errors()->add('failed', 'Record Save Failed');
+					 
+			   }
+		}
+		
+		return redirect()->back()
+		    ->withErrors($validator);	
   }
    
 

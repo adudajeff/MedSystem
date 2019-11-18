@@ -28,10 +28,39 @@ class RoleModel extends Model
 	public function Loaduserroles($id)
 	{
 	    return(DB::table('patient')
+		                  ->join('users', 'patient.PatientId', '=', 'users.id')						 
+                          ->select('patient.*','users.*')
+		                 ->where('users.id', $id)
+		                 ->get());
+	}	
+	public function Loadusers($id)
+	{
+	    return(DB::table('patient')
+		                  ->join('users', 'patient.PatientId', '=', 'users.id')						 
+                          ->select('patient.*','users.*')
+		                 ->where('users.documents', 1)
+		                 ->where('users.id', $id)
+		                 ->where('users.appointments', 1)
+		                 ->get());
+	}
+	
+	public function Loadusersadmin()
+	{
+	    return(DB::table('patient')
+		                  ->join('users', 'patient.PatientId', '=', 'users.id')						 
+                          ->select('patient.*','users.*')
+		                 ->where('users.documents', 1)		                
+		                 ->where('users.appointments', 1)
+		                 ->get());
+	}
+	public function Loadroles($id)
+	{
+	    return(DB::table('patient')
 		                  ->join('user_roles', 'patient.PatientId', '=', 'user_roles.userid')						 
                           ->select('patient.*','user_roles.*')
-		                 ->where('user_roles.userid', $id)
+		                 ->where('user_roles.userid', $id)		                
 		                 ->get());
+						 
 	}
 	public function Updatepatients(array $data,$id)
 	{
@@ -43,12 +72,12 @@ class RoleModel extends Model
 	public function Updaterights(array $data,$id)
 	{
 	   
-	    if (DB::table('user_roles')->where('userid', '=', $id)->exists()) {
-				return(DB::table('user_roles')
-							 ->where('userid', $id)
+	    if (DB::table('users')->where('id', '=', $id)->exists()) {
+				return(DB::table('users')
+							 ->where('users.id', $id)
 							 ->update($data));
 		}else{
-			    return(DB::table('user_roles')->insert($data));
+			    return(DB::table('users')->insert($data));
 		}
 	}
 	

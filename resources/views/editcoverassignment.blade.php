@@ -25,11 +25,11 @@
 							  
 								 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
 								 <div class="form-group row {{ $errors->has('PatientId') ? ' has-error' : '' }}">
-										<label class="control-label col-md-3">Select Patient/Staff
+										<label class="control-label col-md-3">Select IMC member
 											<span class="required" aria-required="true"> * </span>
 										</label>
 										<div class="col-md-5">
-											<select class="form-control input-height"  name="PatientId">
+											<select class="select2 form-control input-height"  name="PatientId">
 											     <option selected value="{{ $cover->PatientId  }}">{{ $cover->FirstName.' '.$cover->LastName }}</option>
 												@foreach($patients as $key)
 												   <option value="{{ $key->PatientId }}">{{ $key->FirstName.' '.$key->LastName }}</option>
@@ -151,7 +151,7 @@
 								   </label>
 									<div class="col-md-5">
 										<button type="submit" class="btn btn-info">Edit Cover</button>
-										
+										<a href="/covers/allcovers" class="btn btn-default red" >Cover List</a>
 									</div>
 								</div>
 							  <div>

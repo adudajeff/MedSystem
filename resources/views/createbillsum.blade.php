@@ -41,7 +41,7 @@
 										<div class="form-group row">
 										    <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
                                             
-											<div class="col-md-6">
+											<div class="col-md-12">
 											        <input type="hidden" value="{{ $invoiceno }}" name="invoiceno">
 													<div class="form-group row {{ $errors->has('billno') ? ' has-error' : '' }}">
 														<label class="control-label col-md-3">Bill No
@@ -58,7 +58,11 @@
 																   
 													  </div>
 											  </div>
-											  	<div class="col-md-6">
+											
+										</div>
+										<div class="form-group row">
+										    
+											  	<div class="col-md-12">
 											       
 													<div class="form-group row {{ $errors->has('billdetail') ? ' has-error' : '' }}">
 														<label class="control-label col-md-3">Bill Detail
@@ -77,7 +81,7 @@
 											  </div>
 										</div>
 										<div class="form-group row">
-											  <div class="col-md-6">
+											  <div class="col-md-12">
 													  <div class="form-group row {{ $errors->has('billamount') ? ' has-error' : '' }}">
 														<label class="control-label col-md-3">Bill Amount
 															<span class="required" aria-required="true">*</span>
@@ -93,7 +97,11 @@
 																	
 													 </div>
                                              </div> 
-											  <div class="col-md-6">
+											  												
+											 </div>
+											 <div class="form-group row">
+										
+											  <div class="col-md-12">
 													 <div class="form-group row {{ $errors->has('billdate') ? ' has-error' : '' }} ">
 														<label class="control-label col-md-3">Bill Date
 															<span class="required" aria-required="true">*</span>

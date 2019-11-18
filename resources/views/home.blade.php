@@ -117,7 +117,7 @@
                     <!-- BEGIN DASHBOARD STATS 1-->
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 blue" href="/Uploadreceipt/allreceiptposts">
+                            <a class="dashboard-stat dashboard-stat-v2 blue" href="/reports/Allreceiptuploads">
                                 <div class="visual">
                                     <i class="fa fa-comments"></i>
                                 </div>
@@ -130,19 +130,19 @@
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 red" href="/Patients">
+                            <a class="dashboard-stat dashboard-stat-v2 red" href="#">
                                 <div class="visual">
                                     <i class="fa fa-bar-chart-o"></i>
                                 </div>
                                 <div class="details">
                                     <div class="number">
                                         <span data-counter="counterup" data-value="{{ $patientcount }}">0</span> </div>
-                                    <div class="desc"> Total Staffs/Patients </div>
+                                    <div class="desc"> Total IMC members </div>
                                 </div>
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 green" href="/reports/billsummary">
+                            <a class="dashboard-stat dashboard-stat-v2 green" href="#">
                                 <div class="visual">
                                     <i class="fa fa-shopping-cart"></i>
                                 </div>
@@ -155,7 +155,7 @@
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a class="dashboard-stat dashboard-stat-v2 purple" href="/Appointments">
+                            <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
                                 <div class="visual">
                                     <i class="fa fa-globe"></i>
                                 </div>

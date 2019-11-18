@@ -17,17 +17,8 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<!-- BEGIN FORM-->
-						  
+							<!-- BEGIN FORM-->						  
                                     <form action="/Appointments/addnew"  class="form-horizontal" method="post">
-                                          <div class="form-actions top">
-											<div class="btn-set pull-left">
-												
-											</div>
-											<div class="btn-set pull-right">
-												<a href="/Appointments"><button type="button" class="btn-info default">View All Appointments</button></a>												
-											</div>
-										</div>
 										<div class="form-body">
 									    <div class="form-group row">
 											 <label class="control-label col-md-0">
@@ -46,13 +37,13 @@
 											 </div>
 										 </div>
                                         	<div class="form-group {{ $errors->has('PatientId') ? ' has-error' : '' }} ">
-                                                <label class="control-label col-md-3">Select Staff/Patient
+                                                <label class="control-label col-md-3">Select IMC member
                                                     <span class="required" aria-required="true"> * </span>
                                                 </label>
                                                 <div class="col-md-5">
 												    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <select class="form-control input-height"  name="PatientId">
-													    <option value="{{ old('PatientId') }}">{{ old('Physician') }}</option>
+                                                    <select class="select2 form-control input-height"  name="PatientId">
+													    <option value="{{ old('PatientId') }}">{{ old('PatientId') }}</option>
                                                         @foreach($patients as $key)
 														   <option value="{{ $key->PatientId }}">{{ $key->FirstName.' '.$key->LastName }}</option>
 														@endforeach
@@ -188,7 +179,7 @@
                                             <div class="row">
                                                 <div class="offset-md-3 col-md-9">
                                                     <button type="submit" class="btn btn-info">Add Record</button>
-                                                    <button type="button" class="btn btn-default">Cancel</button>
+                                                     <a href="/Appointments" class="btn btn-default red" >Appointment List</a>
                                                 </div>
                                             </div>
                                         </div>

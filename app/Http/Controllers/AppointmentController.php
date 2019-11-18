@@ -1,9 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Globalmodel;
 use App\AppointmentModel;
+use App\RoleModel;
+use App\ReceiptModel;
 use Illuminate\Http\Request;
 use DB;
 use Validator;
@@ -19,15 +20,12 @@ class AppointmentController extends Controller {
     }
    public function index()
     {
-       $allappointment=new AppointmentModel();
-	   $patients=$allappointment->Loadpatients();       
-	   $hosptals=$allappointment->Loadhosptals();	   
-	   $doctors=$allappointment->LoadDoctors();   
+       $allappointment=new AppointmentModel();	     
 	   $appointments=$allappointment->LoadAppointments();   
-	   return view('allappointment')->with(compact('patients'))
-	                                ->with(compact('hosptals'))
-	                                ->with(compact('appointments'))
-	                                ->with(compact('doctors'));
+	   return view('allappointment')->with(compact('appointments'));//->with(compact('patients'))
+	                                //->with(compact('hosptals'))
+	                                //->with(compact('appointments'));
+	                                //->with(compact('doctors'));
     }
    public function newappointment() {
 	   $allappointment=new AppointmentModel();
@@ -86,9 +84,32 @@ class AppointmentController extends Controller {
 			'Condition' =>$request->input('Condition'), 
 			'TherapyStartDate' =>date('Y-m-d',strtotime($request->input('TherapyStartDate'))) 
         ]))
-        { 
-	     
-		    return redirect('Appointments');
+		
+		 { 
+	         	
+		        //log Notificafication			
+				$Appointment->Addnotification([ 				            
+				'PatientId' =>$request->input('PatientId'),               
+				'Notification' =>'New Apointment has been Created Starting '.date('Y-m-d',strtotime($request->input('Appointmentdate'))),
+				'description' =>'New Appointment Creation',
+				'datecreated' =>date('Y-m-d'),
+				'timecreated' =>date('h:i:s'),
+				'type' =>'Reminder' 
+			]);
+			
+			
+			$getsms=new RoleModel();
+		    $smsdata=$getsms->Loadusersadmin();
+			
+			foreach($smsdata as $key)
+			{
+				if ($key->MobileNo !== null or trim($key->MobileNo)!=='' ) {
+					 $MobileNo=trim($key->MobileNo);			
+					// \SMSProvider::sendMessage($MobileNo, 'New Apointment has been Created Starting '.date('d/m/Y',strtotime($request->input('Appointmentdate'))));
+				}
+		    }
+		    
+			return redirect('Appointments');
 	             
        }else{
 		   
@@ -141,9 +162,17 @@ class AppointmentController extends Controller {
 			'TherapyStartDate' =>date('Y-m-d',strtotime($request->input('TherapyStartDate'))) 
         ],$AppointmentID))
         { 
-	     
-		    return redirect('Appointments');
-	             
+			//Add notification
+			$Appointment->Addnotification([ 				            
+				'PatientId' =>$request->input('PatientId'),               
+				'Notification' =>'New Apointment has been Created Starting '.date('Y-m-d',strtotime($request->input('Appointmentdate'))),
+				'description' =>'New Appointment Creation',
+				'datecreated' =>date('Y-m-d'),
+				'timecreated' =>date('h:i:s'),
+				'type' =>'Reminder' 
+			]);
+		    
+			return redirect('Appointments');	             
        }else{
 		   
 		    $validator->errors()->add('failed', 'Record Save Failed');

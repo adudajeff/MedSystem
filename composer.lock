@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b7904d07d1e1765a0a199aa11d6301a3",
+    "content-hash": "9f91b48b1e0dee782efcf60b8967ac91",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -319,6 +319,60 @@
                 "trusted proxy"
             ],
             "time": "2017-06-15T17:19:42+00:00"
+        },
+        {
+            "name": "freddiedfre/africas_talking_laravel_5",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/freddiedfre/AfricasTalkingLaravel5.git",
+                "reference": "212be67d43c33ee4c1f20f629282458ad2016021"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/freddiedfre/AfricasTalkingLaravel5/zipball/212be67d43c33ee4c1f20f629282458ad2016021",
+                "reference": "212be67d43c33ee4c1f20f629282458ad2016021",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.1",
+                "php": "~5.5|~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FreddieDfre\\AfricasTalkingLaravel5\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrick A",
+                    "email": "fredrickanyera@gmail.com",
+                    "homepage": "https://github.com/freddiedfre",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A package for integrating Africa's Talking SMS gateway into a Laravel 5 App.",
+            "homepage": "https://github.com/freddiedfre/AfricasTalkingLaravel5",
+            "keywords": [
+                "Africastalking",
+                "sms gateway"
+            ],
+            "time": "2017-10-05T07:38:27+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -4028,7 +4082,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "freddiedfre/africas_talking_laravel_5": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

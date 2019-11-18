@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\ReceiptModel;
+use App\RoleModel;
+use App\AppointmentModel;
 use Illuminate\Http\Request;
 use DB;
 use Validator;
@@ -20,12 +22,17 @@ class NewreceiptController extends Controller {
    public function index()
     {
         
+		$allappointment=new AppointmentModel();
+	    $patients=$allappointment->Loadpatients();
+	   
 		$allhosptals=new ReceiptModel();
 		$hosptals=$allhosptals->Loadhosptals();
 		$documenttypes=$allhosptals->documenttype();
 		return view('postreceipt')->with(compact('hosptals'))
-									->with(compact('documenttypes'));
+									->with(compact('documenttypes'))
+									->with(compact('patients'));
     }
+	
 	
 	public function printsum($invoiceno=null){
 		
@@ -46,10 +53,14 @@ class NewreceiptController extends Controller {
 		$alldocuments=new ReceiptModel();
 		$documents=$alldocuments->Loaddocumets();
 		$allbills=$alldocuments->loadbillsum($invoiceno);
-		$name = \Auth::user()->name;
+		
+		$getimsno=new ReceiptModel();
+		$name=$getimsno->loadname($invoiceno);
+		
+		$namep = $name->FirstName." ".$name->LastName;
 		return view('createbillsum')->with(compact('documents'))
 									->with('invoiceno',$invoiceno)		
-									->with('pname',$name)		
+									->with('pname',$namep)		
 									->with(compact('allbills'));		
 	
     }
@@ -61,11 +72,15 @@ class NewreceiptController extends Controller {
 		$documents=$alldocuments->Loaddocumets();
 		$allbills=$alldocuments->loadbillsum($invoiceno);
 		$alldocuments->deletebill($invoiceno,$billid);
-		$name = \Auth::user()->name;
+		
+		$getimsno=new ReceiptModel();
+		$name=$getimsno->loadname($invoiceno);
+		
+		$namep = $name->FirstName." ".$name->LastName;
 		
             return redirect('Uploadreceipt/billsum/'.$invoiceno.'')
                         ->withErrors('success', 'Delete Success')
-                        ->with('pname', $name)
+                        ->with('pname', $namep)
                         ->withInput();		
 	
     }
@@ -81,8 +96,11 @@ class NewreceiptController extends Controller {
 	 public function uploadnew(Request $request) {
 	   
 	    $validator = Validator::make($request->all(), [
+            'PatientId' => 'required', 
             'hosptal' => 'required', 
 			'invoiceno'=>'required',                       
+			'Amount'=>'required',                       
+			'Invoicedate'=>'required',                       
 			'documenttype'=>'required',                       
 			'files'=>'required'                       
 			      
@@ -99,7 +117,8 @@ class NewreceiptController extends Controller {
 		
 		
 		$name=""; 
-		$patientid = \Auth::user()->id;
+		$patientid = $request->input('PatientId');
+		//$patientid = \Auth::user()->id;
 		
       if($files=$request->file('files')){
         foreach($files as $file){
@@ -111,8 +130,10 @@ class NewreceiptController extends Controller {
 			 $Receipt->Adddocuments([          
 				'document' =>$patientid.'_invoice_'.$name,        
 				'datecreated' =>date('Y-m-d'),        
-				'Patientid' =>$patientid,        
+				'Patientid' =>$request->input('PatientId'),        
 				'invoiceno' =>$request->input('invoiceno'),        
+				'Amount' =>str_replace(',','',$request->input('Amount')),					        
+				'Invoicedate' =>date('Y-m-d',strtotime($request->input('Invoicedate'))),        
 				'documenttype' =>$request->input('documenttype'),        
 				'hosptalid' =>$request->input('hosptal')
 			]);     
@@ -133,7 +154,7 @@ class NewreceiptController extends Controller {
             'billno' => 'required', 
 			'invoiceno'=>'required',                       
 			'billamount'=>'required',                       
-			'billdate'=>'required|date'                       
+			'billdate'=>'required|date'                     
 			      
         ]);
 	  
@@ -147,15 +168,19 @@ class NewreceiptController extends Controller {
         } 
 		
 		 
-		$patientid = \Auth::user()->id;
-		$name = \Auth::user()->name;
-		  
+		
+		$getimsno=new ReceiptModel();
+		$namep=$getimsno->loadname($request->input('invoiceno'));
+		
+		$patientid =$namep->PatientId;
+		$name = $namep->FirstName." ".$namep->LastName;
+		
 		 $Receipt = new ReceiptModel();		
 		 if( $Receipt->Addsum([ 
 			'Patientid' =>$patientid,        
 			'invoiceno' =>$request->input('invoiceno'),
 			'billdetail' =>$request->input('billdetail'),        
-			'billamount' =>$request->input('billamount'),
+			'billamount' =>str_replace(',','',$request->input('billamount')),
 			'billno' =>$request->input('billno'),
 			'billdate' =>date('Y-m-d',strtotime($request->input('billdate')))
 		]))

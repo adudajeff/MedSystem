@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Globalmodel;
+use App\RoleModel;
 use App\AppointmentModel;
 use App\AssigncoverModel;
 use Illuminate\Http\Request;

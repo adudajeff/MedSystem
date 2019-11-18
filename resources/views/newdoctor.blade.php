@@ -69,7 +69,7 @@
 											   </div>
                                             </div>
 											<div class="form-group row {{ $errors->has('hosptal') ? ' has-error' : '' }}">
-												<label class="control-label col-md-3">Hosptal 
+												<label class="control-label col-md-3">Hospital 
 													<span class="required" aria-required="true"> * </span>
 												</label>
 												<div class="col-md-5">
@@ -108,7 +108,7 @@
                                             <div class="row">
                                                 <div class="offset-md-3 col-md-9">
                                                     <button type="submit" class="btn btn-info">Add Record</button>
-                                                    <button type="reset" class="btn btn-default">reset</button>
+                                                    <a href="/Alldoctors" class="btn btn-default red" >Cover List</a>
                                                 </div>
                                             	</div>
                                         	</div>

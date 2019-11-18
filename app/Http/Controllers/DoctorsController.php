@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Globalmodel;
 use App\DoctorModel;
 use App\ReceiptModel;
+use App\RoleModel;
 use Illuminate\Http\Request;
 use DB;
 use Validator;
@@ -24,6 +26,21 @@ class DoctorsController extends Controller {
 		return view('Alldoctors')->with(compact('doctors'));
     }
 	
+	 public function allhosptal()
+    {
+        $alldoctors=new DoctorModel();
+		$doctors=$alldoctors->Loaddoctors();
+		$hospital=$alldoctors->Loadhospital();
+		
+		return view('Allhosptal')->with(compact('hospital'));
+    }
+	
+	public function newhospital() {
+	        
+              return view('newhospital');
+			
+   }
+	
     public function loadedits($id)
     {
          $doctoredit=new DoctorModel();
@@ -35,7 +52,20 @@ class DoctorsController extends Controller {
 		
 		return view('editdoctor')->with(compact('doctors'))
 								->with(compact('hosptals'));
+    } 
+	
+	public function loadhospedits($id)
+    {
+         $alldoctors=new DoctorModel();
+		$doctors=$alldoctors->Loaddoctors();
+		$hospital=$alldoctors->Loadhospitaledit($id);
+		
+		
+		return view('edithospital')->with(compact('hospital'));
+								
     }
+	
+	
 	
    public function newdoctor() {
 	         $allhosptals=new ReceiptModel();
@@ -84,75 +114,147 @@ class DoctorsController extends Controller {
 	   }               
    } 
    
-   public function editpatient(Request $request) {
+   public function editdoctor(Request $request) {
 	   
 	    $validator = Validator::make($request->all(), [
-            'PatientId' => 'required',            
-            'FirstName' => 'required',            
-			'LastName'=>'required',                    
-			'Address'=>'required',                 
-			'MobileNo'=>'required|numeric',             
-			//'InsuranceID'=>'required', 
-			'DOB'=>'required|date',                        
-			'Age'=>'required|numeric',                        
-			'picture'=>'required',                        
-			'Gender'=>'required',                      
-			'MaritalStatus'=>'required',          
-			'BloodGroup'=>'required',                  
-			'BloodPressure'=>'required',                
-			'Sugar'=>'required',                       
-			'Condition'=>'required',    
-			'Email'=>'required|email',       
+            'doctorname' => 'required',            
+			'email'=>'required|email',
+			'mobile'=>'required',
+			'hosptal'=>'required',
+			'id'=>'required',
         ]);
 		
-       
+
 		
-	    $patientid=$request->input('PatientId');
+	
         if ($validator->fails()) {
 			$validator->errors()->add('failed', 'Complete Your fields as indicated in red! and press add button');
-            return redirect('Patients/loadedits/'.$patientid.'')
+            return redirect('Doctors/newdoctor')
                         ->withErrors($validator)
                         ->withInput();
         } 
+		     
 		
+	    $doctor = new DoctorModel();
 		
-		$name="";
-		if($file=$request->file('picture')){
-			$file=$request->file('picture');
-		
-			$name=$file->getClientOriginalName();
-			$name=$request->input('FirstName').'_profilepic_'.$name;
-			$file->move('image',$request->input('FirstName').'_profilepic_'.$name);			
-		}		
-			
-		
-	   $patient = new PatientModel();
-	   
-       if ($patient->Updatepatients([          
-			'FirstName' =>$request->input('FirstName'),        
-			'LastName' =>$request->input('LastName'),                   
-			'Address' =>$request->input('Address'),               
-			'MobileNo' =>$request->input('MobileNo'),
-			'DOB' =>date('Y-m-d',strtotime($request->input('DOB'))),                   
-			'Age' =>$request->input('Age'),             				
-			'Picture'=>$name,           	
-			'Gender' =>$request->input('Gender'),                     
-			'MaritalStatus' =>$request->input('MaritalStatus'),         
-			'BloodGroup' =>$request->input('BloodGroup'),                 
-			'BloodPressure' =>$request->input('BloodPressure'),              
-			'Sugar' =>$request->input('Sugar'),                     
-			'Condition' =>$request->input('Condition'),  
-			'Email' =>$request->input('Email')
-        ],$patientid))
+       if ($doctor->Updatedoctors([          
+			'doctorname' =>$request->input('doctorname'),
+			'mobile' =>$request->input('mobile'),
+			'email' =>$request->input('email'),
+			'hosptalid' =>$request->input('hosptal')
+        ],$request->input('id')))
         { 
 	     
-		    return redirect('Patients');
+		    return redirect('Alldoctors');
 	             
        }else{
 		   
 		    $validator->errors()->add('failed', 'Record Save Failed');
-	         return redirect('Patients/loadedits/'.$patientid.'')
+	         return redirect('Doctors/newdoctor')
 	             ->withErrors($validator);
 	   }               
    }
+   
+   public function addnewhosp(Request $request) {
+	   
+	    $validator = Validator::make($request->all(), [
+            'hospitalname' => 'required',            
+			'email'=>'required|email',
+			'mobile'=>'required|numeric',		
+        ]);
+		
+
+		
+	
+        if ($validator->fails()) {
+			$validator->errors()->add('failed', 'Complete Your fields as indicated in red! and press add button');
+            return redirect('Hospitals/newhospital')
+                        ->withErrors($validator)
+                        ->withInput();
+        } 
+		     
+		
+	    $doctor = new DoctorModel();
+		
+       if ($doctor->Addhosp([          
+			'hosptalname' =>$request->input('hospitalname'),
+			'mobile' =>$request->input('mobile'),
+			'email' =>$request->input('email')
+			
+        ]))
+        { 
+	     
+		    return redirect('Hospitals/Allhospital');
+	             
+       }else{
+		   
+		    $validator->errors()->add('failed', 'Record Save Failed');
+	         return redirect('Hospitals/newhospital')
+	             ->withErrors($validator);
+	   }               
+   } 
+   
+   public function edithosp(Request $request) {
+	   
+	    $validator = Validator::make($request->all(), [
+            'id' => 'required',            
+            'hospitalname' => 'required',            
+			'email'=>'required|email',
+			'mobile'=>'required|numeric',		
+        ]);
+		
+
+		
+	
+        if ($validator->fails()) {
+			$validator->errors()->add('failed', 'Complete Your fields as indicated in red! and press add button');
+            return redirect('Hospitals/loadedits/'.$request->input('id').'')
+                        ->withErrors($validator)
+                        ->withInput();
+        } 
+		     
+		
+	    $doctor = new DoctorModel();
+		
+       if ($doctor->Updatehospital([          
+			'hosptalname' =>$request->input('hospitalname'),
+			'mobile' =>$request->input('mobile'),
+			'email' =>$request->input('email')
+			
+        ],$request->input('id')))
+        { 
+	     
+		    return redirect('Hospitals/Allhospital');
+	             
+       }else{
+		   
+		    $validator->errors()->add('failed', 'Record Save Failed');
+	         return redirect('Hospitals/loadedits/'.$request->input('id').'')
+	             ->withErrors($validator);
+	   }               
+   }
+
+   public function deleterecord($table=null,$field=null,$value=null)
+   {
+	    
+	    $delete = new Globalmodel();
+		
+		if ($delete->deleterecord($table,$field,$value))
+		{
+				
+			return response()->json([
+			'success' => 'Record Deleted Successfully!'
+			]);
+		}else{
+			return response()->json([
+			'error' => 'Record Deletion Failed!'
+			]);
+			//return \Redirect::back();			
+		}
+		
+	    
+   }	   
+   
+  
 }
+

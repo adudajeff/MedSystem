@@ -10,7 +10,7 @@
         margin: auto;
         padding: 30px;
         border: 1px solid #eee;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+        /*box-shadow: 0 0 10px rgba(0, 0, 0, .15);*/
         font-size: 16px;
         line-height: 24px;
         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
@@ -166,7 +166,7 @@
                         <tr>						   
                             <td style="text-align:center;">
                                 <b>BILL SUMMARY FORM</b><br>
-                                (tO be sent to your section)<br>                               
+                                (to be sent to your section)<br>                               
                             </td>
                             
                         </tr>
@@ -257,11 +257,28 @@
                 
             </tr> 
         </table>
+		<br>
+		<br>
+		<br>
+		<br>
+		<hr>
 		  <!--- Show the uploaded invoices -->
-		 @foreach($documents as $document)		
-			
-			<image   src="{{ asset('image/'. $document->document ) }}" ></image>
-												
+		 @foreach($documents as $document)
+		 
+		 <?php $path =asset('image/'. $document->document ) ;
+		       $file = new SplFileInfo($path) ;
+		       $ext  = $file->getExtension(); 
+			   if  (($ext=='pdf') or  ($ext=='docx') )
+			   {
+				   ?>
+				   <a href="{{ asset('image/'. $document->document ) }}">{{  $document->document  }}</a>
+				   <?php
+			   }else{
+			   ?>
+			   <image   src="{{ asset('image/'. $document->document ) }}" ></image>
+			    <?php
+			   }
+                ?>			   
 		   <br>
 		 @endforeach
     </div>

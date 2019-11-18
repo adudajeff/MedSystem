@@ -38,7 +38,9 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="{{ asset('assets/global/plugins/fullcalendar/packages/daygrid/main.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/fullcalendar/lib/cupertino/jquery-ui.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/jqvmap/jqvmap/jqvmap.css') }}" rel="stylesheet" type="text/css" />
-        <!-- END PAGE LEVEL PLUGINS -->
+         <link href="{{ asset('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+		<!-- END PAGE LEVEL PLUGINS -->
     	
         <link href="{{ asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
@@ -63,7 +65,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <link href="{{ asset('assets/layouts/layout4/css/themes/light.min.css') }}" rel="stylesheet" type="text/css" id="style_color" />
         <link href="{{ asset('assets/layouts/layout4/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- END THEME LAYOUT STYLES -->
-        <link rel="shortcut icon" href="{{ asset('assets/layouts/layout4/img/medic.png') }}" /> </head>
+        <link rel="shortcut icon" href="{{ asset('image/medicfav.png') }}" /> </head>
     <!-- END HEAD -->   
 
     <!-- Styles -->
@@ -149,14 +151,18 @@ License: You must have a valid license purchased only from themeforest(the above
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu" role="menu">
+						    @if  (Auth::user()->documents==1)
                             <li>
                                 <a href="/Uploadreceipt/newpost">
                                     <i class="fa fa-upload"></i>New Upload </a>
                             </li>
+							@endif
+							@if  (Auth::user()->documents==1)
                             <li>
                                 <a href="/Uploadreceipt/allreceiptposts">
                                     <i class="icon-tag"></i>Generate New Bill Summary </a>
                             </li>
+							@endif
                             <li>
                                 <a href="javascript:;">
                                     <i class="icon-share"></i> Share </a>
@@ -202,97 +208,34 @@ License: You must have a valid license purchased only from themeforest(the above
                             <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <i class="icon-bell"></i>
-                                    <span class="badge badge-success"> 7 </span>
+                                    <span class="badge badge-success"> <?php if (isset($calendar)) { ?> {{ $notificationcount }} <?php } else{ echo 0; } ?> </span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="external">
                                         <h3>
-                                            <span class="bold">12 pending</span> notifications</h3>
+                                            <span class="bold"><?php if (isset($calendar)) { ?> {{ $notificationcount }} <?php } else{ echo 0; } ?>New</span> notifications</h3>
                                         <a href="page_user_profile_1.html">view all</a>
                                     </li>
                                     <li>
                                         <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">just now</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-success">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span> New user registered. </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">3 mins</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-danger">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </span> Server #12 overloaded. </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">10 mins</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-warning">
-                                                            <i class="fa fa-bell-o"></i>
-                                                        </span> Server #2 not responding. </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">14 hrs</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-info">
-                                                            <i class="fa fa-bullhorn"></i>
-                                                        </span> Application error. </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">2 days</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-danger">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </span> Database overloaded 68%. </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">3 days</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-danger">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </span> A user IP blocked. </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">4 days</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-warning">
-                                                            <i class="fa fa-bell-o"></i>
-                                                        </span> Storage Server #4 not responding dfdfdfd. </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">5 days</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-info">
-                                                            <i class="fa fa-bullhorn"></i>
-                                                        </span> System Error. </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="time">9 days</span>
-                                                    <span class="details">
-                                                        <span class="label label-sm label-icon label-danger">
-                                                            <i class="fa fa-bolt"></i>
-                                                        </span> Storage server failed. </span>
-                                                </a>
-                                            </li>
+                                              <?php
+											  if (isset($calendar))
+											  {
+											  ?>
+										      @foreach($notification as $key)											
+												<li>
+													<a href="javascript:;">
+														<span class="time">Time:{{ $key->timecreated }} Date:{{ $key->datecreated }}</span>
+														<span class="details">
+															<span class="label label-sm label-icon label-success">
+																<i class="fa fa-plus"></i>
+															</span> {{ $key->notification }}</span>
+													</a>
+												</li> 
+											 @endforeach
+										    <?php 
+											  }
+											  ?>
                                         </ul>
                                     </li>
                                 </ul>
@@ -309,107 +252,34 @@ License: You must have a valid license purchased only from themeforest(the above
                             <li class="dropdown dropdown-extended dropdown-tasks dropdown-dark" id="header_task_bar">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <i class="icon-calendar"></i>
-                                    <span class="badge badge-primary"> 3 </span>
+                                    <span class="badge badge-primary"> <?php if (isset($calendar)) { ?> {{ $remindercount }} <?php } else{ echo 0; } ?> </span>
                                 </a>
                                 <ul class="dropdown-menu extended tasks">
                                     <li class="external">
                                         <h3>You have
-                                            <span class="bold">12 pending</span> tasks</h3>
+                                            <span class="bold"><?php if (isset($calendar)) { ?> {{ $remindercount }} <?php } else{ echo 0; } ?> Appointment(s)</span> Created</h3>
                                         <a href="?p=page_todo_2">view all</a>
                                     </li>
                                     <li>
                                         <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                            <li>
+                                             <?php 
+											  if (isset($calendar))
+											  {
+											  ?>
+										      @foreach($reminder as $key)
+										   <li>
                                                 <a href="javascript:;">
                                                     <span class="task">
-                                                        <span class="desc">New release v1.2 </span>
-                                                        <span class="percent">30%</span>
+                                                        <span class="desc">{{ $key->notification }} </span>
+                                                        <span class="percent">Time:{{ $key->timecreated }}</span>
                                                     </span>
-                                                    <span class="progress">
-                                                        <span style="width: 40%;" class="progress-bar progress-bar-success" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">40% Complete</span>
-                                                        </span>
-                                                    </span>
+                                                    
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Application deployment</span>
-                                                        <span class="percent">65%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 65%;" class="progress-bar progress-bar-danger" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">65% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Mobile app release</span>
-                                                        <span class="percent">98%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 98%;" class="progress-bar progress-bar-success" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">98% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Database migration</span>
-                                                        <span class="percent">10%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 10%;" class="progress-bar progress-bar-warning" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">10% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Web server upgrade</span>
-                                                        <span class="percent">58%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 58%;" class="progress-bar progress-bar-info" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">58% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Mobile development</span>
-                                                        <span class="percent">85%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 85%;" class="progress-bar progress-bar-success" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">85% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">New UI release</span>
-                                                        <span class="percent">38%</span>
-                                                    </span>
-                                                    <span class="progress progress-striped">
-                                                        <span style="width: 38%;" class="progress-bar progress-bar-important" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">38% Complete</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
+                                              @endforeach
+										    <?php 
+											  }
+											  ?>
                                         </ul>
                                     </li>
                                 </ul>
@@ -421,7 +291,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <span class="username username-hide-on-mobile"> {{ Auth::user()->name }} </span>
                                     <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
-                                    <img alt="" class="img-circle" src="{{ asset('image/FR.JOHN_profilepic_FR.JOHN_profilepic_jeff.jpg') }}" /> </a>
+									<?php
+									$Picture=Auth::user()->Picture;
+									 //echo $Picture;
+									?>
+                                    <img alt="" class="img-circle" src="{{ asset('image/'.$Picture ) }}" /> </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
                                     <li>
                                         <a href="/User/profile/{{ Auth::user()->id }}">

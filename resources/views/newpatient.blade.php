@@ -7,7 +7,7 @@
 						<div class="portlet box green">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-gift"></i>Patient/Staff Basic Information </div>
+								<i class="fa fa-gift"></i>IMC member Basic Information </div>
 							<div class="tools">
 								<a href="javascript:;" class="collapse"> </a>
 								<a href="#portlet-config" data-toggle="modal" class="config"> </a>
@@ -36,6 +36,24 @@
 													   @endif
                                                  </div>
                                              </div>
+											<div class="form-group row {{ $errors->has('Title') ? ' has-error' : '' }}">
+													<label class="control-label col-md-3">Title 
+														<span class="required" aria-required="true"> * </span>
+													</label>
+													<div class="col-md-5">
+														<select class="form-control input-height" name="Title">
+															 <option value="{{ old('Title') }}">{{ old('Title') }}</option>
+															@foreach($title as $key)
+															   <option value="{{ $key->TitleCode }}">{{ $key->TitleDescription }}</option>
+															@endforeach
+														</select>
+														   @if ($errors->has('Title'))
+															<span class="help-block ">
+																{{ $errors->first('Title') }}
+															</span>
+														   @endif
+													</div>
+										    </div>
 											<div class="form-group row {{ $errors->has('FirstName') ? ' has-error' : '' }}">
                                                 <label class="control-label col-md-3">Surname
                                                     <span class="required" aria-required="true"> * </span>
@@ -50,6 +68,7 @@
 													</div>
                                                            
 											  </div>
+											
                                               <div class="form-group row {{ $errors->has('LastName') ? ' has-error' : '' }}">
                                                 <label class="control-label col-md-3">Other Names
                                                     <span class="required" aria-required="true"> * </span>
@@ -64,8 +83,26 @@
 											        </div>
                                                             
 											 </div>
-											  <div class="form-group row {{ $errors->has('CountryCode') ? ' has-error' : '' }}">
-													<label class="control-label col-md-3">Select Country 
+											 <div class="form-group row {{ $errors->has('Nationality') ? ' has-error' : '' }}">
+													<label class="control-label col-md-3">Nationality 
+														<span class="required" aria-required="true"> * </span>
+													</label>
+													<div class="col-md-5">
+														<select class="form-control input-height" name="Nationality">
+															 <option value="{{ old('Nationality') }}">{{ old('Country') }}</option>
+															@foreach($country as $key)
+															   <option value="{{ $key->CountryCode }}">{{ $key->Country }}</option>
+															@endforeach
+														</select>
+														   @if ($errors->has('Nationality'))
+															<span class="help-block ">
+																{{ $errors->first('Nationality') }}
+															</span>
+														   @endif
+													</div>
+										    </div>
+											 <div class="form-group row {{ $errors->has('CountryCode') ? ' has-error' : '' }}">
+													<label class="control-label col-md-3">Country of Work 
 														<span class="required" aria-required="true"> * </span>
 													</label>
 													<div class="col-md-5">
@@ -107,7 +144,7 @@
                                                 <div class="col-md-5">
                                                     <select class="form-control input-height" name="Gender" id="Gender">
                                                         <option value="{{ old('Gender') }}">{{ old('Gender') }}</option>
-                                                        <option value="Not Applicable" >Not Applicable</option>
+                                                        <option selected value="Not Applicable" >Not Applicable</option>
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
                                                     </select>
@@ -118,7 +155,7 @@
 													   @endif
                                                 </div>
                                             </div>
-                                            <div class="form-group row {{ $errors->has('Age') ? ' has-error' : '' }}">
+                                           <!-- <div class="form-group row {{ $errors->has('Age') ? ' has-error' : '' }}">
                                                 <label class="control-label col-md-3">Age
                                                     <span class="required" aria-required="true"> * </span>
                                                 </label>
@@ -131,7 +168,7 @@
 													   @endif
 												</div>
                                                       
-											</div>
+											</div>-->
                                             <div class="form-group row {{ $errors->has('MobileNo') ? ' has-error' : '' }}">
                                                 <label class="control-label col-md-3">Mobile No.
                                                     <span class="required" aria-required="true"> * </span>
@@ -145,9 +182,21 @@
 													   @endif
 													</div>
                                                       
-											</div> 
+											</div>
+											<div class="form-group row {{ $errors->has('externalmember') ? ' has-error' : '' }}">
+                                                <label class="control-label col-md-3">Member/Non Member
+                                                    <span class="required" aria-required="true">  </span>
+                                                </label>
+                                                <div class="col-md-5">                                                    
+													   <label class="mt-checkbox mt-checkbox-outline">
+                                                            <input type="checkbox" name="externalmember" id="externalmember" value="{{ old('IMSNO') }}" > <b>Non Member?</b>
+                                                            <span></span>
+                                                        </label>
+												</div>
+                                                      
+											</div>
 											<div class="form-group row {{ $errors->has('IMSNO') ? ' has-error' : '' }}">
-                                                <label class="control-label col-md-3">IMS No.
+                                                <label class="control-label col-md-3">Passport No/IMS No.
                                                     <span class="required" aria-required="true"> * </span>
                                                 </label>
                                                 <div class="col-md-5">
@@ -155,6 +204,20 @@
 													   @if ($errors->has('IMSNO'))
 														<span class="help-block ">
 															{{ $errors->first('IMSNO') }}
+														</span>
+													   @endif
+													</div>
+                                                      
+											</div>
+											<div class="form-group row {{ $errors->has('AARno') ? ' has-error' : '' }}">
+                                                <label class="control-label col-md-3">AAR No.
+                                                    <span class="required" aria-required="true">  </span>
+                                                </label>
+                                                <div class="col-md-5">
+                                                    <input name="AARno" type="text" placeholder="AAR number" class="form-control input-height" value="{{ old('AARno') }}"> 
+													   @if ($errors->has('AARno'))
+														<span class="help-block ">
+															{{ $errors->first('AARno') }}
 														</span>
 													   @endif
 													</div>
@@ -175,7 +238,7 @@
                                                       
 											</div>
 											<div class="form-group row {{ $errors->has('OptionNo') ? ' has-error' : '' }}">
-                                                <label class="control-label col-md-3">Group No.
+                                                <label class="control-label col-md-3">Option No.
                                                     <span class="required" aria-required="true"> * </span>
                                                 </label>
                                                 <div class="col-md-5">
@@ -227,7 +290,7 @@
                                                     <select class="form-control input-height" name="MaritalStatus" id="MaritalStatus" >
                                                         <option value="{{ old('MaritalStatus') }}">{{ old('MaritalStatus') }}</option>
                                                         <option value="">Select Marital Status</option>
-                                                        <option value="Not Applicable">Not Applicable</option>
+                                                        <option selected value="Not Applicable">Not Applicable</option>
                                                         <option value="Single">Single</option>
                                                         <option value="Married">Married</option>
                                                     </select>
@@ -258,6 +321,7 @@
                                                 <div class="col-md-5">
                                                     <select class="form-control input-height" name="BloodGroup" id="BloodGroup" >
                                                         <option value="{{ old('BloodGroup') }}">{{ old('BloodGroup') }}</option>
+                                                        <option selected value="NOT DEFINED">NOT DEFINED</option>
                                                         <option value="A+">A+</option>
                                                         <option value="A-">A-</option>
                                                         <option value="B+</">B+</option>
@@ -318,7 +382,7 @@
 											     <div class="spinner pull-left hidden"><i class="icon-spinner icon-spin"></i>    Processing...</div>	 
                                                 <div class="offset-md-3 col-md-9">
                                                     <button type="submit" id="btnadd" class="btn btn-info">Add Record</button>
-                                                    <button type="reset" class="btn btn-default">reset</button>
+                                                   <a href="/Patients" class="btn btn-default red" > IMC members List</a>
                                                 </div>
                                             	</div>
                                         	</div>

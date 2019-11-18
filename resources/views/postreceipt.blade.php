@@ -6,13 +6,32 @@
 					<div class="row">
                         <div class="col-md-12">
                             <div class="m-heading-1 border-green m-bordered">
-                                <h3>Upload your Hosptal Invoices and Discharge Sheet</h3>                                
+                                <h3>Upload Your Hospital Invoices and Discharge Sheet</h3>                                
                             </div>
                             <form id="fileupload1" action="/Uploadreceipt/upload" method="post" enctype="multipart/form-data">
                                 <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
 								 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
+								 <div class="form-group row {{ $errors->has('PatientId') ? ' has-error' : '' }} ">
+									<label class="control-label col-md-3">Select IMC Member
+										<span class="required" aria-required="true"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="hidden" name="_token" value="{{ csrf_token() }}">
+										<select class="select2 form-control input-height"  name="PatientId">
+											<option value="{{ old('PatientId') }}">{{ old('Physician') }}</option>
+											@foreach($patients as $key)
+											   <option value="{{ $key->PatientId }}">{{ $key->FirstName.' '.$key->LastName }}</option>
+											@endforeach
+										</select>
+											  @if ($errors->has('PatientId'))
+												<span class="help-block ">
+													{{ $errors->first('PatientId') }}
+												</span>
+											   @endif
+									</div>
+								</div>
 								 <div class="form-group row {{ $errors->has('hosptal') ? ' has-error' : '' }}">
-										<label class="control-label col-md-3">Select Hosptal
+										<label class="control-label col-md-3">Select Hospital
 											<span class="required" aria-required="true"> * </span>
 										</label>
 										<div class="col-md-5">
@@ -60,6 +79,36 @@
 														 @endif
 												</div>                                                            
 								</div>
+							    <div class="form-group row {{ $errors->has('Amount') ? ' has-error' : '' }}">
+											<label class="control-label col-md-3">Invoice Amount.
+												<span class="required" aria-required="true"> * </span>
+											</label>
+												<div class="col-md-5">
+												<input type="text" name="Amount" data-required="1" placeholder="Enter Your Invoice Amount" class="form-control input-height" value="{{ old('Amount') }}"> 
+														@if ($errors->has('Amount'))
+														<span class="help-block ">
+															{{ $errors->first('Amount') }}
+														</span>
+														 @endif
+												</div>                                                            
+								</div>
+								<div class="form-group row {{ $errors->has('Invoicedate') ? ' has-error' : '' }}">
+                                                <label class="control-label col-md-3">Document Date
+                                                    <span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <div class="col-md-5">
+													   <div class="input-group input-medium date date-picker" data-date="{{ date('d-m-Y') }}" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+																<input class="form-control input-height" name="Invoicedate" size="16" placeholder="Document Date" type="text" value="{{ date('d-m-Y') }}">
+																<span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+														</div>
+                                                        <input type="hidden" id="dtp_input2" value="">
+														 @if ($errors->has('Invoicedate'))
+															<span class="help-block ">
+																{{ $errors->first('Invoicedate') }}
+															</span>
+														   @endif
+                                                </div>
+                                </div>
 								
 								<div class="form-group row  {{ $errors->has('files') ? ' has-error' : '' }}">
 								  <label class="control-label col-md-3">Select Invoice/Bill to upload

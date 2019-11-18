@@ -1,3 +1,9 @@
+			<?php
+			 //$idr=\Auth::user()->id;
+			// $roledata=RoleModel::Loadroles($idr);		     
+		    //$roledata=$role->Loadroles($idr);
+		    //dd($roledata);
+			?>
 			<div class="page-sidebar navbar-collapse collapse">
                     <!-- BEGIN SIDEBAR MENU -->
                     <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
@@ -25,21 +31,22 @@
                         <li class="heading">
                             <h3 class="uppercase">Main Menu</h3>
                         </li>
+						@if  (Auth::user()->patients==1)
                         <li class="nav-item  ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-user"></i>
-                                <span class="title">Patients/Staffs</span>
+                                <span class="title">IMC members</span>
                                 <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">
                                 <li class="nav-item  ">
                                     <a href="/Patients" class="nav-link ">
-                                        <span class="title">All Staffs/Patients</span>
+                                        <span class="title">All IMC members</span>
                                     </a>
                                 </li>
                                 <li class="nav-item  ">
                                     <a href="/Patients/newpatient" class="nav-link ">
-                                        <span class="title">New patient/Staff</span>
+                                        <span class="title">New IMC member</span>
                                     </a>
                                 </li>  
 								<li class="nav-item  divider">
@@ -50,6 +57,8 @@
 								
                             </ul>
                         </li> 
+						@endif
+						@if  (Auth::user()->appointments==1)
 						<li class="nav-item  ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-calendar"></i>
@@ -69,6 +78,8 @@
                                 </li> 							                                
                             </ul>
                         </li>
+						@endif
+						@if  (Auth::user()->covermanagement==1)
 						<li class="nav-item  ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-diamond"></i>
@@ -93,6 +104,8 @@
                                 </li>                                
                             </ul>
                         </li>
+						@endif
+						@if  (Auth::user()->doctors==1)
                         <li class="nav-item  ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-puzzle"></i>
@@ -113,6 +126,8 @@
                                 <li class="divider"></li>
                             </ul>
                         </li>
+						@endif
+						@if  (Auth::user()->documents==1)
 						<li class="nav-item  ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="fa fa-upload"></i>
@@ -131,13 +146,15 @@
                                     </a>
                                 </li>
 								<li class="nav-item  ">
-                                    <a href="/Uploadreceipt/billsum/invoiceno" class="nav-link ">
+                                    <a href="/Uploadreceipt/allreceiptposts" class="nav-link ">
                                         <span class="title">New Bill Summary Form</span>                                        
                                     </a>
                                 </li>
                                 
                             </ul>
-                        </li> 		
+                        </li> 
+						@endif
+						@if  (Auth::user()->reconciliation==1)
 						<li class="nav-item  ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="fa fa-dollar"></i>
@@ -151,12 +168,20 @@
                                     </a>
                                 </li> 
 								<li class="nav-item  ">
+                                    <a href="/reconcile/reconcilesum" class="nav-link ">
+                                        <span class="title">Reconcile Bill</span>
+                                    </a>
+                                </li>
+								<!--<li class="nav-item  ">
                                     <a href="/reconcile/reconcilebill" class="nav-link ">
                                         <span class="title">Reconcile Bill</span>
                                     </a>
-                                </li> 
+                                </li> -->
+								
                             </ul>
-                        </li> 			
+                        </li> 
+						@endif
+						@if  (Auth::user()->reports==1)
 						<li class="nav-item  ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="fa fa-file"></i>
@@ -170,28 +195,45 @@
                                     </a>
                                 </li>
                                 <li class="nav-item  ">
-                                    <a href="/reports/Allcovers" class="nav-link ">
-                                        <span class="title">All Staffs/Patients By Cover</span>                                        
+                                    <a href="/reports/allcovers" class="nav-link ">
+                                        <span class="title">All IMC members By Cover</span>                                        
                                     </a>
                                 </li>
 								<li class="nav-item  ">
-                                    <a href="#" class="nav-link ">
+                                    <a href="/reports/Allreceiptuploads" class="nav-link ">
                                         <span class="title">All Receipt/Invoice Uploads</span>                                        
                                     </a>
                                 </li>
 								<li class="nav-item  ">
-                                    <a href="#" class="nav-link ">
+                                    <a href="/reports/allappointments" class="nav-link ">
                                         <span class="title">All Appointment Listings</span>                                        
                                     </a>
                                 </li>
-									<li class="nav-item  ">
-                                    <a href="#" class="nav-link ">
+								<li class="nav-item  ">
+                                    <a href="/reports/appointmentsschedule" class="nav-link ">
                                         <span class="title">All Appointments In Calendar</span>                                        
+                                    </a>
+                                </li>
+								<li class="nav-item  ">
+                                    <a href="/reports/aarlists" class="nav-link ">
+                                        <span class="title">AAR List</span>                                        
+                                    </a>
+                                </li>
+								<li class="nav-item  ">
+                                    <a href="/reports/imslists" class="nav-link ">
+                                        <span class="title">IMC Members Claim List</span>                                        
+                                    </a>
+                                </li>
+								<li class="nav-item  ">
+                                    <a href="/reports/imsmlists" class="nav-link ">
+                                        <span class="title">IMC Non Members List</span>                                        
                                     </a>
                                 </li>
                                 
                             </ul>
                         </li> 
+						@endif
+						@if  (Auth::user()->settings==1)
                         <li class="nav-item  ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-settings"></i>
@@ -200,18 +242,18 @@
                             </a>
                             <ul class="sub-menu">
                                 <li class="nav-item  ">
-                                    <a href="maps_google.html" class="nav-link ">
-                                        <span class="title">Google Maps</span>
+                                    <a href="/Hospitals/Allhospital" class="nav-link ">
+                                        <span class="title">All Hospitals</span>
                                     </a>
                                 </li>
                                 <li class="nav-item  ">
-                                    <a href="maps_vector.html" class="nav-link ">
+                                    <a href="#" class="nav-link ">
                                         <span class="title">Vector Maps</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        
+						@endif                        
                     </ul>
                     <!-- END SIDEBAR MENU -->
                 </div>

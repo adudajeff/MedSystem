@@ -11,10 +11,14 @@ class PatientModel extends Model
 	{
 	    return(DB::table('patient')
 		     ->join('country', 'patient.CountryCode', '=', 'country.CountryCode')             
-             ->select('country.*','patient.*')            
+		     ->join('title', 'patient.Title', '=', 'title.TitleCode')             
+             ->select('country.*','patient.*','title.*')            
 		      ->get());		
 	}
-	
+	public function loadtitle()
+	{
+	   return(DB::table('title')->get());	
+	}
 	public function Addpatients(array $data)
 	{
 	    
@@ -37,8 +41,9 @@ class PatientModel extends Model
 	{
 	    return(DB::table('patient')
 						 ->join('country', 'patient.CountryCode', '=', 'country.CountryCode')
+						 ->join('title', 'patient.Title', '=', 'title.TitleCode')   
 		                 ->where('patient.patientid', $id)
-						 ->select('country.*','patient.*')
+						 ->select('country.*','patient.*','title.*')
 		                 ->get());
 	}
 	

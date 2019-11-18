@@ -22,10 +22,13 @@
                                             <tr>
                                                 <th class="all">Docid</th>
                                                 <th class="min-phone-l">All Names</th>
-                                                <th class="min-tablet">Description</th>
-                                                <th class="min-tablet">Hosptal</th>
+                                                <th class="min-tablet">Description</th>                                               
+                                                <th class="min-tablet">Doc. Type</th>
+												<th class="min-tablet">Hospital</th>
                                                 <th class="min-tablet">Invoice No</th>
-                                                <th class="all">Date and Time Uploaded</th>                                              
+                                                <th class="min-tablet">Invoice date</th>
+                                                <th class="min-tablet">Amount</th>
+                                                <th class="all">Date/Time Uploaded</th>                                              
                                                 <th class="all">View Invoice</th>
                                                
                                                
@@ -37,9 +40,12 @@
                                                 <td>{{ $document->docid }}</td>
                                                 <td>{{ $document->FirstName." ".$document->LastName }}</td>
                                                 <td>{{ $document->document }}</td>
+                                                <td>{{ $document->documenttype }}</td>
                                                 <td>{{ $document->hosptalname }}</td>
                                                 <td>{{ $document->invoiceno }}</td>
-                                                <td>{{ date('F j, Y, g:i a',strtotime($document->datecreated)) }}</td>                                                
+                                                <td>{{ date('F j, Y',strtotime($document->Invoicedate)) }}</td>
+                                                <td>{{ number_format($document->Amount,2) }}</td>
+                                                <td>{{ date('F j, Y',strtotime($document->datecreated)) }}</td>                                               
                                                 <td><a  class="text-success" href="{{ asset('image/'. $document->document ) }}" ><i class="fa fa-download m-r-5"></i> View Document</a></td>                                                                                               											
                                             </tr>
 											 @endforeach
@@ -47,10 +53,13 @@
                                             <tr>
                                                 <th class="all">Docid</th>
                                                 <th class="min-phone-l">All Names</th>
-                                                <th class="min-tablet">Description</th>
-                                                <th class="min-tablet">Hosptal</th>
+                                                <th class="min-tablet">Description</th>                                               
+                                                <th class="min-tablet">Doc Type</th>
+												 <th class="min-tablet">Hospital</th>
                                                 <th class="min-tablet">Invoice No</th>
-                                                <th class="all">Date and Time Uploaded</th>                                              
+                                                 <th class="min-tablet">Invoice date</th>
+                                                <th class="min-tablet">Amount</th>
+                                                <th class="all">Date/Time Uploaded</th>                                              
                                                 <th class="all">View Invoice</th>
                                                 
                                             </tr>

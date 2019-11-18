@@ -18,6 +18,8 @@
                                     <div class="tools"> </div>
                                 </div>
                                 <div class="portlet-body">
+								    </form>
+									<meta name="csrf-token" content="{{ csrf_token() }}">
                                     <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                                          <thead>
                                             <tr>
@@ -57,7 +59,7 @@
 												<td>{{ $appointment->Postponementdate }}</td>     
 												<td>{{ $appointment->postponementreason }}</td>     
                                                 <td><a  href="{{ url('Appointments/editappointment/' . $appointment->AppointmentID )}}" ><i class="fa fa-pencil m-r-5"></i> Edit</a></td>
-                                                <td><a  href="#"  ><i class="fa fa-trash-o"></i> Delete</a></td>
+                                                <td><a  href="#" onclick="deleterecord('{{ url('Appointments/deleterecord/appointment/AppointmentID/'.$appointment->AppointmentID )}}')" class="delete" ><i class="fa fa-trash-o"></i> Delete</a></td>
 											
                                             </tr>
 											 @endforeach
@@ -83,6 +85,7 @@
                                         </tfoot>
                                         </tbody>
                                     </table>
+									</form>
                                 </div>
                             </div>
                             <!-- END EXAMPLE TABLE PORTLET-->
